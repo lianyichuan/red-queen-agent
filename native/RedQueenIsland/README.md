@@ -1,6 +1,6 @@
-# Red Queen Island
+# Red Queen Agent — Native Island
 
-SwiftUI + AppKit companion for the Red Queen desktop app, macOS 14 or later. Open `Package.swift` in Xcode to build the native executable. The app is a nonactivating accessory NSPanel; it shares the existing Electron executor and speech output instead of creating a second agent session.
+SwiftUI + AppKit companion for the Red Queen Agent desktop app, macOS 14 or later. Open `Package.swift` in Xcode to build the native executable. The app is a nonactivating accessory NSPanel; it shares the existing Electron executor and speech output instead of creating a second agent session.
 
 From the project root, `npm run build:island` builds a local `.build/RedQueenIsland.app` bundle with the installed Xcode Swift compiler. `npm start`, then use the compact button to start it with the host's stdin/stdout connection. The generated bundle is a host-owned helper; directly opening it without a connection exits on stdin EOF.
 

@@ -1,95 +1,95 @@
-# Red Queen
+# Red Queen Agent
 
-私人 macOS 桌面 AI 助手：电影式红色全息投影、原生动态小岛，以及可观察的实际任务执行。
+A personal macOS AI assistant with a cinematic red hologram, a native dynamic island, and observable task execution.
 
-![Red Queen](docs/screenshots/interface.png)
+![Red Queen Agent](docs/screenshots/interface.png)
 
-## 功能
+## Features
 
-- **全息交互**：五套人物姿态，扫描显形、视差、粒子与实际音频电平反馈。
-- **双形态**：完整指挥界面，以及 SwiftUI + AppKit 原生动态小岛。
-- **外观控制**：日间／夜间模式，30–100% 背景不透明度。
-- **任务执行**：连接本机已配置的 Codex CLI 或 Claude Code；支持进度、取消、续聊和完整回复。
-- **可见操作**：可选连接 Rex，展示实际工具调用、命令输出与文件变更。
-- **语音交互**：手动输入始终可用；可读取语音识别服务的新听写结果。edge-tts 在线播报，默认语速 115%，可调整。
-- **私人助手人格**：对话名称固定为 Red Queen，默认中文回复与播报，固定界面英文。
+- **Holographic interface**: five character poses, scanning reveals, parallax, particles, and feedback driven by actual audio levels.
+- **Two interface modes**: a full command panel and a native SwiftUI + AppKit dynamic island.
+- **Appearance controls**: day and night themes with adjustable background opacity from 30% to 100%.
+- **Task execution**: connects to your locally configured Codex CLI or Claude Code, with progress, cancellation, session continuation, and detailed replies.
+- **Visible operations**: optional Rex integration displays actual tool calls, command output, and file changes.
+- **Speech interaction**: manual input is always available; new dictation transcripts can become directives. Online speech output uses edge-tts, with adjustable speed set to 115% by default.
+- **Personal assistant persona**: the assistant calls itself Red Queen. Replies and speech default to Chinese; permanent interface labels are English.
 
-## 环境与启动
+## Requirements and setup
 
-桌面功能面向 **macOS 14 或更新版本**。需要 Node.js / npm；原生小岛需要含 Swift 编译器的 Xcode 工具链，语音播报需要 Python 3 与网络。
+Desktop functionality targets **macOS 14 or later**. Install Node.js and npm. The native island requires an Xcode toolchain with the Swift compiler; speech output requires Python 3 and an internet connection.
 
 ```bash
 npm ci
 npm start
 ```
 
-执行任务前，需要在本机安装并登录至少一个执行器：`codex` 或 `claude`。本项目不提供模型账户、密钥或推理额度；执行器沿用你自己的配置。Rex 为可选项，未安装时不会阻止原有执行器工作。
+Before executing tasks, install and authenticate at least one local execution engine: `codex` or `claude`. This project does not provide model accounts, API keys, or inference credits. Execution engines use your own local configuration. Rex is optional; its absence does not prevent the configured execution engine from working.
 
-原生小岛首次启用时会自动构建，也可提前运行：
+The native island builds automatically when first enabled. You can also build it ahead of time:
 
 ```bash
 npm run build:island
 ```
 
-可用 Xcode 打开 `native/RedQueenIsland/Package.swift` 查看原生代码。辅助程序依赖桌面宿主连接，不作为独立 AI 实例运行。构建失败会回退到网页小窗。
+Open `native/RedQueenIsland/Package.swift` in Xcode to inspect the native code. The helper requires a connection to the desktop host and does not run as a separate AI instance. If the build fails, the application falls back to a web-based compact window.
 
-顶部按钮用于切换完整／精简模式、打开外观设置、配置执行器及隐藏界面。`⌥Space` 显隐，`Enter` 发送，执行期间可停止。中文输入法组词期间不会自动发送。
+Use the top controls to switch interface modes, adjust appearance, configure execution, or hide the window. `Option+Space` shows or hides the interface; `Enter` sends a directive. Active tasks can be stopped. Input-method composition does not trigger automatic submission.
 
-## 语音识别
+## Speech recognition
 
-当前适配器支持网易叭哥说的本机听写历史；界面统一显示 **Speech Recognition**。安装对应服务并开启听写历史后，在 Red Queen 中启用语音接令，再使用该服务的听写热键。
+The current adapter supports local dictation history from the Bageshuo desktop speech recognition service. The interface calls this capability **Speech Recognition**. Install the service and enable dictation history, then enable speech input in Red Queen and use the service's dictation hotkey.
 
-适配器只提取新增的 `dictate` 文本，不直接读取音频，也不使用记录中的账户 token。启动、暂停及账号切换前的旧记录不会补执行；默认关闭接令。忙碌期间的后续文本暂存，需手动载入后发送。
+The adapter extracts only new `dictate` text. It does not read audio directly or use account tokens from the history store. Old records from before startup, a pause, or an account switch are not replayed. Speech input is off by default. Transcripts received during a task are held for manual review and submission.
 
-适配代码在 `main/dictation.js`，依赖该服务的本机历史格式；服务升级后可能需要调整。没有安装该服务时，可以直接输入或粘贴指令。
+The adapter lives in `main/dictation.js` and depends on the service's local history format, which may change after an update. Without the service, type or paste directives directly.
 
-## 配置、隐私与执行范围
+## Configuration, privacy, and execution scope
 
-设置保存在 `~/.javis/config.json`，目录名出于兼容保留。执行器模型、登录和网关由执行器自己的本机配置管理。请勿提交这些配置、账户文件、个人听写历史或日志。
+Settings are stored in `~/.javis/config.json`; this directory name is retained for compatibility. Model selection, authentication, and gateway configuration remain in the execution engine's own local settings. Do not commit these settings, account files, personal dictation history, or logs.
 
-当前默认执行器沙箱是 `danger-full-access`，执行器可以以你的用户权限运行命令。可在设置中选择更受限的模式。请在了解执行范围后下达指令；本项目的人格提示词不是权限隔离机制。
+The default execution sandbox is `danger-full-access`, which allows the execution engine to run commands with your user permissions. You can select a more restricted mode in settings. Understand the execution scope before issuing directives; persona instructions are not an access-control boundary.
 
-用户指令和必要的任务上下文会传给所选执行器／模型服务，播报文本会发给在线语音服务。启用 Rex 时，操作实录保存在本机 `~/.javis/execution.log`，其中可能包含任务内容；不要公开上传。
+Directives and necessary task context are sent to the configured execution engine or model service. Spoken replies are sent to an online speech service. When Rex is enabled, operations are logged locally in `~/.javis/execution.log`; these logs may contain task content and should not be published.
 
-## 开发与验证
+## Development and validation
 
 ```bash
 npm test
 npm run test:island-runtime
 ```
 
-`npm test` 运行不调用模型、不调用在线语音的本地回归测试。`test:island-runtime` 在 macOS 上验证真实 Swift 辅助程序协议和退出行为，需要本机工具链。
+`npm test` runs local regression checks without calling a model or online speech service. `test:island-runtime` validates the real Swift helper protocol and shutdown behavior on macOS and requires the local toolchain.
 
-以下是单独选择的在线冒烟测试，会使用你自己的执行器账户或在线语音服务：
+The following optional online smoke tests use your own execution-engine account or an online speech service:
 
 ```bash
 npm run test:executor
 npm run test:tts
 ```
 
-浏览器视觉预览：
+For a browser visual preview:
 
 ```bash
 npm run preview
 ```
 
-打开 `http://127.0.0.1:8765/renderer/index.html?preview=1`。预览可切换姿态与状态，不执行任务、不调用模型；原生小岛需在桌面应用中体验。
+Open `http://127.0.0.1:8765/renderer/index.html?preview=1`. The preview lets you switch poses and states without executing tasks or calling models. The native island is available through the desktop application.
 
-## 目录
+## Project structure
 
-- `main/`：Electron 宿主、配置、执行器、语音识别及 Rex 连接。
-- `renderer/`：完整界面、网页小窗、WebGL 全息效果与外观控制。
-- `native/RedQueenIsland/`：SwiftUI / AppKit 小岛。
-- `prompt/`：基础输出协议与可编辑的中文人格背景。
-- `assets/poses/`：当前使用的五套人物纹理。
-- `test/`：回归测试与可选在线验证。
+- `main/`: Electron host, configuration, execution engines, speech recognition, and Rex integration.
+- `renderer/`: full interface, web compact mode, WebGL hologram, and appearance controls.
+- `native/RedQueenIsland/`: SwiftUI / AppKit island.
+- `prompt/`: response protocol and editable Chinese persona and backstory.
+- `assets/poses/`: the five character textures currently used by the interface.
+- `test/`: regression checks and optional online smoke tests.
 
-## 当前限制
+## Current limitations
 
-人物是静态姿态驱动的 2.5D 投影，没有连续骨骼动作或真实逐音素口型。执行器能完成的操作取决于本机工具与权限；拥有终端权限不代表能观察或控制所有应用。当前不包含通用屏幕感知、免提唤醒或长期记忆系统。
+The character is a 2.5D projection driven by still poses, without continuous skeletal animation or phoneme-accurate lip synchronization. Available operations depend on local tools and permissions; terminal access does not imply the ability to observe or control every application. General screen perception, hands-free wake-word detection, and long-term memory are not included.
 
-个人调试记录、完整桌面截图、原始生成响应、历史备份、运行日志、依赖和未经确认来源的旧 VRM 模型不包含在公开版本中。
+Personal debugging records, full-desktop captures, raw generation responses, historical backups, runtime logs, installed dependencies, and an old VRM model without verified provenance are excluded from the public repository.
 
-## 作者与许可
+## Author and license
 
-作者：[lianyichuan](https://github.com/lianyichuan)。版权署名见 [LICENSE](LICENSE)。源代码采用 MIT License。依赖、生成素材说明及作品名称／标志说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。Red Queen 的 Umbrella Corporation 来历是虚构角色背景，本项目不代表相关作品或公司的官方产品。
+Author: [lianyichuan](https://github.com/lianyichuan). See [LICENSE](LICENSE) for the copyright notice. Source code is licensed under the MIT License. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for dependencies, generated visuals, and references to third-party names and marks. Red Queen's Umbrella Corporation origin is a fictional backstory; this project is not an official product of the referenced works or companies.

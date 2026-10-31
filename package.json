@@ -1,8 +1,8 @@
 {
-  "name": "javis",
-  "productName": "Red Queen",
+  "name": "red-queen-agent",
+  "productName": "Red Queen Agent",
   "version": "0.1.0",
-  "description": "Red Queen — 私人桌面 AI 助手与全息交互界面",
+  "description": "Personal macOS AI assistant with a holographic interface and native dynamic island.",
   "main": "main/main.js",
   "scripts": {
     "start": "electron .",
@@ -34,10 +34,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lianyichuan/red-queen.git"
+    "url": "https://github.com/lianyichuan/red-queen-agent.git"
   },
-  "homepage": "https://github.com/lianyichuan/red-queen#readme",
+  "homepage": "https://github.com/lianyichuan/red-queen-agent#readme",
   "bugs": {
-    "url": "https://github.com/lianyichuan/red-queen/issues"
+    "url": "https://github.com/lianyichuan/red-queen-agent/issues"
   }
 }
