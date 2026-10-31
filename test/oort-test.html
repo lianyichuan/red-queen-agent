@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<script type="importmap">{"imports":{"three":"../node_modules/three/build/three.module.js"}}</script>
+<style>body{margin:0;background:#1a1a1a;display:flex;align-items:center;justify-content:center;height:100vh}</style>
+</head><body>
+<canvas id="c" style="width:340px;height:480px"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { createOort } from '../renderer/oort.js';
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+renderer.setSize(340, 480, false);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 340 / 480, 0.05, 50);
+camera.position.set(0, 0.9, 1.95);
+camera.lookAt(0, 0.85, 0);
+const oort = createOort(scene);
+const clock = new THREE.Clock();
+window.__oort = { visible: true, oort, frames: 0, errors: [] };
+window.addEventListener("error", (e) => window.__oort.errors.push(String(e.message)));
+const pts = scene.children.filter((x) => x.isPoints);
+window.__oort.points = pts;
+function tick() {
+  window.__oort.frames++;
+  const d = Math.min(0.05, clock.getDelta());
+  const t = clock.getElapsedTime();
+  try {
+    oort.update(t, d, window.__oort.visible);
+    renderer.render(scene, camera);
+  } catch (err) {
+    window.__oort.errors.push(String(err && err.message));
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+</script></body></html>

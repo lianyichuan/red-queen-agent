@@ -1,0 +1,10 @@
+<svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <path class="sector" data-i="0" d="M120.0,120.0 L221.6,77.9 Q180.7,59.3 162.1,18.4 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="1" d="M120.0,120.0 L162.1,18.4 Q120.0,34.2 77.9,18.4 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="2" d="M120.0,120.0 L77.9,18.4 Q59.3,59.3 18.4,77.9 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="3" d="M120.0,120.0 L18.4,77.9 Q34.2,120.0 18.4,162.1 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="4" d="M120.0,120.0 L18.4,162.1 Q59.3,180.7 77.9,221.6 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="5" d="M120.0,120.0 L77.9,221.6 Q120.0,205.8 162.1,221.6 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="6" d="M120.0,120.0 L162.1,221.6 Q180.7,180.7 221.6,162.1 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="7" d="M120.0,120.0 L221.6,162.1 Q205.8,120.0 221.6,77.9 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+</svg>

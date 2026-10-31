@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+body { background:#111; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+#logo-wrap { width:280px; animation: breath 4.2s ease-in-out infinite; }
+#logo { width:100%; animation: spin 3.2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes breath { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+</style></head><body>
+<div id="logo-wrap"><svg id="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <path class="sector" data-i="0" d="M120.0,120.0 L221.6,77.9 Q180.7,59.3 162.1,18.4 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="1" d="M120.0,120.0 L162.1,18.4 Q120.0,34.2 77.9,18.4 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="2" d="M120.0,120.0 L77.9,18.4 Q59.3,59.3 18.4,77.9 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="3" d="M120.0,120.0 L18.4,77.9 Q34.2,120.0 18.4,162.1 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="4" d="M120.0,120.0 L18.4,162.1 Q59.3,180.7 77.9,221.6 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="5" d="M120.0,120.0 L77.9,221.6 Q120.0,205.8 162.1,221.6 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector" data-i="6" d="M120.0,120.0 L162.1,221.6 Q180.7,180.7 221.6,162.1 Z" fill="#FFFFFF" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+  <path class="sector red" data-i="7" d="M120.0,120.0 L221.6,162.1 Q205.8,120.0 221.6,77.9 Z" fill="#BA0C12" stroke="#000000" stroke-width="4.0" stroke-linejoin="round"/>
+</svg></div>
+<script>
+// 红色扇区随机闪烁（Web Animations API，丝滑插值）
+const reds = [...document.querySelectorAll('.sector.red')];
+function flashLoop() {
+  const el = reds[Math.floor(Math.random() * reds.length)];
+  el.animate(
+    [{ filter: 'brightness(1)' }, { filter: 'brightness(2.6)' }, { filter: 'brightness(1)' }],
+    { duration: 380 + Math.random() * 250, easing: 'ease-out' }
+  );
+  setTimeout(flashLoop, 240 + Math.random() * 420);
+}
+flashLoop();
+window.__test = { redCount: reds.length, sectorCount: document.querySelectorAll('.sector').length };
+</script></body></html>

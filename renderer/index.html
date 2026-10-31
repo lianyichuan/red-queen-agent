@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src 'self' file: blob:; img-src 'self' blob: data:; connect-src 'self' blob: data:; font-src 'self' data:;" />
+  <title>Red Queen</title>
+  <link rel="stylesheet" href="style.css" /><link rel="stylesheet" href="appearance.css" />
+  <script type="importmap">{"imports":{"three":"../node_modules/three/build/three.module.js"}}</script>
+</head>
+<body>
+  <main id="panel" class="state-idle">
+    <section id="island" aria-label="Red Queen compact interface">
+      <div id="island-drag" class="island-main">
+        <div class="island-core" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="island-copy"><span id="island-state">RQ / STANDING BY</span><p id="island-line">Enable speech recognition to issue a directive.</p></div>
+        <button id="island-voice" class="icon-button" aria-label="Enable speech recognition" title="Enable speech recognition"><svg viewBox="0 0 20 20"><rect x="7" y="3" width="6" height="9" rx="3"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v3M7.5 18h5"/></svg></button>
+        <button id="island-stop" class="icon-button" aria-label="Abort current operation" title="Abort current operation" hidden><svg viewBox="0 0 20 20"><rect x="6" y="6" width="8" height="8" rx="1"/></svg></button>
+        <button id="island-expand" class="icon-button" aria-label="Expand command interface" title="Expand command interface"><svg viewBox="0 0 20 20"><path d="M7 3H3v4M13 3h4v4M17 13v4h-4M7 17H3v-4"/></svg></button>
+      </div>
+      <div class="island-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </section>
+    <header class="titlebar" id="drag-handle">
+      <div class="identity"><img src="../assets/redqueen-mark.png" alt="" /><span>RED QUEEN <b>/</b> COMMAND INTELLIGENCE</span></div>
+      <div class="window-actions">
+        <button id="rex-console" class="icon-button" aria-label="Open Rex operations console" title="Open Rex operations console"><svg viewBox="0 0 20 20"><path d="m4 5 5 5-5 5M11 15h5"/></svg></button>
+        <button id="compact" class="icon-button" aria-label="Switch to compact interface" title="Switch to compact interface"><svg viewBox="0 0 20 20"><path d="M4 7V4h3M13 4h3v3M16 13v3h-3M7 16H4v-3"/></svg></button>
+        <button id="display" class="icon-button" aria-label="Display appearance" title="Display appearance">◐</button>
+        <button id="settings" class="icon-button" aria-label="Open configuration" title="CONFIGURATION"><svg viewBox="0 0 20 20"><path d="m8 3 4 0 .7 2 2 .9 2 .1 1 3-1.5 1.5-.3 2.2.8 1.8-2.4 2-1.9-.6-2.1.5L9 18l-3-1-.1-2-1.2-1.7L3 12V9l1.7-1.2L6 6l.1-2Z"/><circle cx="10" cy="10" r="2.5"/></svg></button>
+        <button id="hide" class="icon-button" aria-label="Hide interface" title="Hide · Recall with ⌥Space"><svg viewBox="0 0 20 20"><path d="M5 10h10"/></svg></button>
+      </div>
+    </header>
+    <section class="hero-heading">
+      <div><p class="eyebrow">PERSONAL COMMAND INTERFACE</p><h1>RED QUEEN</h1></div>
+      <div class="connection"><span class="status-dot"></span><span id="connection-label">STANDBY</span></div>
+    </section>
+    <section id="stage" aria-label="Holographic projection. Drag to reposition.">
+      <div class="stage-grid"></div><div class="stage-halo"></div>
+      <div class="projection-volume"></div><div class="depth-orbit orbit-back"></div><div class="depth-orbit orbit-front"></div>
+      <div class="stage-reticle" aria-hidden="true"><span>SPATIAL DEPTH</span><i></i><span>PROJECTION FIELD</span></div>
+      <div class="frame-corner tl"></div><div class="frame-corner tr"></div><div class="frame-corner bl"></div><div class="frame-corner br"></div>
+      <div class="stage-label left">RED QUEEN<br /><span>HOLOGRAPHIC LINK</span></div>
+      <div class="stage-label right"><span class="live-dot"></span> LIVE<br /><span>LOCAL COMMAND NODE</span></div>
+      <img id="portrait-fallback" src="../assets/poses/idle.png" alt="Red Queen holographic projection" />
+      <canvas id="orb" aria-hidden="true"></canvas>
+      <div class="scan-beam"></div>
+      <div class="projection-base"><i></i><i></i><i></i></div>
+      <div class="stage-footer"><span>TACTICAL PROJECTION</span><span id="state-code">AWAITING ORDERS</span></div>
+    </section>
+    <section class="response" aria-live="polite" aria-atomic="true">
+      <div class="response-heading"><span><i class="status-dot"></i><span id="state-label">STANDING BY</span></span><span id="elapsed"></span><button id="stop" class="text-button" hidden>ABORT <span>■</span></button></div>
+      <p id="line">Command link established. Awaiting directive.</p>
+      <button id="detail-toggle" class="text-button" aria-expanded="false" hidden>MISSION REPORT <span>↗</span></button>
+      <div id="detail" hidden></div>
+      <button id="dictation-draft" class="dictation-draft" hidden></button>
+      <button id="rex-status" class="text-button" title="View live operations">REX / LIVE OPERATIONS ↗</button>
+      <div id="waveform" class="waveform" aria-hidden="true"></div>
+      <p class="voice-help">Enable speech recognition. Use your dictation hotkey.<br />Recognized speech becomes a directive. No focus required.</p>
+    </section>
+    <form id="composer" autocomplete="off">
+      <button id="voice-focus" type="button" class="icon-button voice-button" aria-label="Enable speech recognition" title="Enable speech recognition"><svg viewBox="0 0 20 20"><rect x="7" y="3" width="6" height="9" rx="3"/><path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v3M7.5 18h5"/></svg></button>
+      <input id="chat" type="text" placeholder="Issue a directive…" autocomplete="off" spellcheck="false" aria-label="Directive to Red Queen" />
+      <button id="send" type="submit" aria-label="Transmit directive" title="Transmit directive · Enter"><svg viewBox="0 0 20 20"><path d="m5 10 5-5 5 5M10 5v11"/></svg></button>
+    </form>
+    <footer class="bottom-bar"><button id="dictation-toggle" class="text-button" aria-pressed="false">Enable speech recognition</button><span id="input-hint">SPEECH RECOGNITION / LINKED</span><span><kbd>⌥</kbd> <kbd>SPACE</kbd> RECALL</span></footer>
+  </main>
+  <script src="preview.js"></script>
+  <script src="appearance.js"></script>
+  <script type="module" src="hologram.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

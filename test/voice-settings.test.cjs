@@ -1,0 +1,12 @@
+'use strict';
+const assert = require('node:assert/strict');
+const {resolveVoiceSettings: resolve} = require('../main/voice-settings');
+assert.deepEqual(resolve({voice:'zh-CN-XiaoxiaoNeural',rate:'+15%',pitch:'+0Hz',redqueen:true}),{voice:'zh-CN-XiaoxiaoNeural',rate:'+15%',pitch:'-6Hz'},'Red Queen tone must preserve selected voice and faster rate');
+assert.equal(resolve({voice:'en-GB-SoniaNeural',rate:'+30%',redqueen:true}).voice,'en-GB-SoniaNeural');
+assert.equal(resolve({rate:'-8%',redqueen:true}).rate,'-8%','explicit slower setting remains available');
+assert.equal(resolve({pitch:'-12Hz',redqueen:true}).pitch,'-12Hz');
+assert.equal(resolve({pitch:'+0Hz',redqueen:false}).pitch,'+0Hz');
+assert.equal(resolve({rate:'oops'}).rate,'+15%');
+assert.equal(resolve({rate:'+500%'}).rate,'+100%');
+assert.equal(resolve({rate:'-90%'}).rate,'-50%');
+console.log('✓ voice settings: selected voice/rate survive tone mode; pitch, default and range validation');

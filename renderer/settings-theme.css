@@ -1,0 +1,14 @@
+:root { color-scheme: dark; }
+body { background: radial-gradient(ellipse at 100% 0, #45202d35, transparent 65%), #101115; color: #e7dfe2; padding: 24px; font-size: 12px; }
+h1 { color: #f1e9eb; font-size: 17px; letter-spacing: 1.5px; margin-bottom: 12px; }
+.env { color: #91828b; font-size: 9px; line-height: 1.8; overflow-wrap: anywhere; }
+section { border-color: #ffffff10; border-radius: 12px; background: #ffffff02; padding: 16px; margin-bottom: 14px; }
+.sec-title { color: #d8929d; font-size: 10px; letter-spacing: 1px; margin-bottom: 12px; }
+label { color: #a79ba3; font-size: 11px; }
+select, input[type=text], input[type=number] { height: 34px; border-color: #ffffff16; background: #ffffff04; color: #e3dbe0; border-radius: 7px; }
+select:focus, input:focus { border-color: #cf6b7b7a; }
+.radios label { border-color: #ffffff12; padding: 11px 9px; }
+.radios label:has(input:checked) { border-color: #c5647566; background: #a6496115; }
+button.primary { background: #9a425743; border-color: #c35d7155; font-size: 12px; letter-spacing: 1px; }
+button.primary:hover { background: #af4b6566; }
+small { color: #88727f; }

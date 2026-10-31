@@ -1,0 +1,43 @@
+{
+  "name": "javis",
+  "productName": "Red Queen",
+  "version": "0.1.0",
+  "description": "Red Queen — 私人桌面 AI 助手与全息交互界面",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test:persona": "node test/persona.test.cjs",
+    "test:executor": "node test/executor.test.cjs",
+    "test:tts": "node test/tts.test.cjs",
+    "test:lifecycle": "node test/lifecycle.test.cjs",
+    "test:dictation": "node test/dictation.test.cjs",
+    "test:rex": "node test/rex.test.cjs",
+    "test:executor-events": "node test/executor-events.test.cjs",
+    "preview": "python3 -m http.server 8765 --bind 127.0.0.1",
+    "build:island": "node scripts/build-native-island.cjs",
+    "test:island": "node test/native-island.test.cjs",
+    "test:island-runtime": "node test/native-island-runtime.test.cjs",
+    "test:voice-settings": "node test/voice-settings.test.cjs",
+    "test": "node scripts/test-offline.cjs"
+  },
+  "author": {
+    "name": "lianyichuan",
+    "url": "https://github.com/lianyichuan"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@pixiv/three-vrm": "^3.5.5",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lianyichuan/red-queen.git"
+  },
+  "homepage": "https://github.com/lianyichuan/red-queen#readme",
+  "bugs": {
+    "url": "https://github.com/lianyichuan/red-queen/issues"
+  }
+}
